@@ -2,6 +2,7 @@ package com.example.kode.screens.main.ui.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,11 +32,13 @@ fun User(
     lastName: String,
     userTag: String,
     position: String,
+    onItemClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(0.dp, 6.dp),
+        modifier = Modifier.padding(0.dp, 6.dp)
+            .clickable(onClick = onItemClick),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             painter = rememberAsyncImagePainter(avatarUrl),
@@ -43,7 +46,7 @@ fun User(
                 .size(72.dp)
                 .clip(CircleShape),
             contentScale = ContentScale.Crop,
-            contentDescription = ""
+            contentDescription = "",
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(3.dp)

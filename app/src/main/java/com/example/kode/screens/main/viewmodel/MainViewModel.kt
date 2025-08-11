@@ -3,21 +3,23 @@ package com.example.kode.screens.main.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.interactor.GetUsersByDepartmentUseCase
 import com.example.domain.interactor.GetUsersUseCase
-import com.example.domain.repo.entity.UsersData
+import com.example.domain.repo.entity.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    val usecase: GetUsersUseCase
+    private val getUsersUseCase: GetUsersUseCase,
+    private val getUsersByDepartmentUseCase: GetUsersByDepartmentUseCase
 ) : ViewModel() {
 
     private val _selectedTabIndex = MutableStateFlow(0)
     val selectedTabIndex = _selectedTabIndex.asStateFlow()
 
-    private val _state = MutableStateFlow(UserState())
-    val state = _state.asStateFlow()
+    private val _users = MutableStateFlow(listOf<User>())
+    val users = _users.asStateFlow()
 
     fun changeSelectedTabIndex(value: Int) {
         _selectedTabIndex.value = value
@@ -25,20 +27,26 @@ class MainViewModel(
 
     fun loadUsers() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true)
             try {
-                val users = usecase.execute()
-                _state.value = UserState(users = users)
+                _users.value = getUsersUseCase.execute()
             } catch (e: Exception) {
                 Log.d("CustomError", "${e.message}")
-            } finally {
-                _state.value = _state.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    fun getUsersByDepartment(department: String?) {
+        viewModelScope.launch {
+            try {
+                if (department == null) {
+                    _users.value = getUsersUseCase.execute()
+                } else {
+                    _users.value = getUsersByDepartmentUseCase.execute(department)
+                }
+            } catch (e: Exception) {
+                Log.d("CustomError", "${e.message}")
             }
         }
     }
 }
 
-data class UserState(
-    val users: List<UsersData> = emptyList(),
-    val isLoading: Boolean = false,
-)

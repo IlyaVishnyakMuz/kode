@@ -1,8 +1,8 @@
 package com.example.domain.interactor
 
-import com.example.domain.repo.entity.UsersData
+import com.example.domain.repo.entity.User
 
 interface UsersRepo {
 
-    suspend fun get(): List<UsersData>
+    suspend fun get(): List<User>
 }

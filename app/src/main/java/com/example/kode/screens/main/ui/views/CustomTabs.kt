@@ -16,11 +16,19 @@ import com.example.kode.screens.main.viewmodel.MainViewModel
 @Composable
 fun CustomTabs(viewModel: MainViewModel) {
     val tabs = listOf(
-        TabItem("Все"),
-        TabItem("Designers"),
-        TabItem("Analysts",),
-        TabItem("Managers"),
-        TabItem("iOS")
+        TabItem("Все", null),
+        TabItem("Android", "android"),
+        TabItem("iOS", "ios"),
+        TabItem("Дизайн", "design"),
+        TabItem("Менеджмент", "management"),
+        TabItem("QA", "qa"),
+        TabItem("Бэк-офис", "back_office"),
+        TabItem("Frontend", "frontend"),
+        TabItem("HR", "hr"),
+        TabItem("PR", "pr"),
+        TabItem("Backend", "backend"),
+        TabItem("Техподдержка", "support"),
+        TabItem("Аналитика", "analytics"),
     )
     ScrollableTabRow(
         selectedTabIndex = viewModel.selectedTabIndex.collectAsState().value,
@@ -31,6 +39,7 @@ fun CustomTabs(viewModel: MainViewModel) {
                 selected = viewModel.selectedTabIndex.collectAsState().value == index,
                 onClick = {
                     viewModel.changeSelectedTabIndex(index)
+                    viewModel.getUsersByDepartment(tab.department)
                 },
                 modifier = Modifier.padding(12.dp, 8.dp)
             ) {
@@ -44,4 +53,4 @@ fun CustomTabs(viewModel: MainViewModel) {
     }
 }
 
-data class TabItem(val title:String)
+data class TabItem(val title:String, val department: String?)

@@ -5,6 +5,7 @@ import com.example.kode.screens.MainActivity
 import com.example.todotimer.di.common.android.AndroidModule
 import com.example.todotimer.di.interactor.InteractorModule
 import com.example.todotimer.di.repo.RepoModule
+import com.example.todotimer.di.screens.detail.DetailModule
 import com.example.todotimer.di.screens.main.MainModule
 import dagger.Component
 import javax.inject.Singleton
@@ -17,6 +18,7 @@ import javax.inject.Singleton
         RepoModule::class,
         ApiModule::class,
         MainModule::class,
+        DetailModule::class,
     ]
 )
 interface AppComponent {

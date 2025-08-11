@@ -1,9 +1,9 @@
 package com.example.data.repo.users
 
-import com.example.domain.repo.entity.UsersData
+import com.example.domain.repo.entity.User
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserDto(
     @SerializedName("id")
     val id: String,
     @SerializedName("avatarUrl")
@@ -23,7 +23,7 @@ data class User(
     @SerializedName("phone")
     val phone: String
 ) {
-    fun toDomain(): UsersData = UsersData(
+    fun toDomain(): User = User(
         id,
         avatarUrl,
         firstName,

@@ -1,6 +1,6 @@
 package com.example.domain.repo.entity
 
-data class UsersData(
+data class User (
     val id: String,
     val avatarUrl: String,
     val firstName: String,
